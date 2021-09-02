@@ -1,0 +1,25 @@
+// Wanted to practice using classes and IDs too.
+
+#navbar {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    background-color: #28282B;
+    overflow: hidden;
+}
+  
+li.navbar-item {
+    float: left;
+}
+  
+a.navbar-link {
+    display: block;
+    text-align: center;
+    color: #FFFFF0;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+a.navbar-link:hover {
+    background-color: #1B1212;
+}

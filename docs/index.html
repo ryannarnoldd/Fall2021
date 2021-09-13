@@ -16,14 +16,14 @@
                 <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
               </a>
           
-              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" :class="{ 'is-active': navbarActive }" @click="navbarActive = !navbarActive">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
               </a>
             </div>
           
-            <div id="navbarBasicExample" class="navbar-menu">
+            <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': navbarActive }">
               <div class="navbar-start">
                 <a class="navbar-item">
                   Home
@@ -108,7 +108,8 @@
               return {
                 counter: 0,
                 now: new Date().toLocaleString(),
-                visible: true
+                visible: true,
+                navbarActive: false,
             }
           },
             mounted() {

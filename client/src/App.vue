@@ -1,13 +1,25 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+      </div>
+    </div>
+    <Nav />
+    
+    <router-view/>
   </div>
-  <router-view/>
 </template>
 
 <style lang="scss">
 
 </style>
 
-<script> export default{} </script>
+<script> 
+import Nav from "./components/Nav";
+
+export default {
+  components: {
+    Nav
+  }
+} 
+</script>

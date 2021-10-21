@@ -1,9 +1,7 @@
-const { response } = require('express');
 const express = require('express'); // can include express because of the node module // common.js system (module)
 const path = require('path')
+
 const usersController = require('./controllers/users');
-
-
 const app = express()
 const port = 3000
 

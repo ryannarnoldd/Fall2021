@@ -1,23 +1,18 @@
+const { response } = require('express');
 const express = require('express'); // can include express because of the node module // common.js system (module)
-const usersController = require('../controllers/users');
+const path = require('path')
+const usersController = require('./controllers/users');
 
 
 const app = express()
 const port = 3000
 
 app
-    .get('*', (req, res, next)=> {
-      console.log('A request cam')
-      next();
-    })
-    .get('/', (req, res) => {
-      res.send('Hello World!')
-    })
-    .get('/newpaltz', (req, res) => {
-      res.send('Hello New Paltz!')
-    })
+    .use('/', express.static(path.join(__dirname, '../docs')))
+    .use('/users', usersController)
 
-    .use ('/users', usersController)
+app
+    .get('*', (req, res)=> res.sendFile(path.join(__dirname, '../docs/index.html')))
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

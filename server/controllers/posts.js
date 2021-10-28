@@ -6,15 +6,22 @@ const app = express.Router();
 
 app
     .get('/', (req, res, next)=> {
-        res.send(model.GetAll())
+        res.send(model.GetAll());
     })
 
     .get('/search', (req, res, next)=> {
-        res.send(model.Search(req.query.q))
+        res.send(model.Search(req.query.q));
     })
 
     .get('/:id', (req, res, next)=> {
-        res.send(model.Get(req.params.id))
+        console.log(req.headers);
+        res.send(model.Get(req.params.id));
+    })
+    .post('/', (req, res, next)=> {
+        const newPost = model.Add(req.body);
+        res.send(newPost);
+
+        res.status(2021).send(newPost);
     })
 
 module.exports = app;

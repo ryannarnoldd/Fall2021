@@ -65,6 +65,9 @@ module.exports.Add = function Add(post) {
     if(!post.user_handle){
         throw {code: 422, msg: "Post must have an Owner"}
     }
+    post.time = Date();
+
+    post.id = list.length;
      list.push(post);
      return { ...post };
 }

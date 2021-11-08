@@ -1,4 +1,8 @@
 const bcrypt = require('bcrypt');
+const { result } = require('lodash')
+const { client } = require('./mongo');
+
+const collection = client.db(process.env.MONGO_DB).collection("users");
 
 const list = [
     { 
@@ -41,22 +45,26 @@ const list = [
 
 ];
 
-module.exports.GetAll = function GetAll() { return list; }
-module.exports.Get = user_id => list[user_id];
+module.exports.GetAll = function GetAll() { return collection.find().toArray(); };
+
+module.exports.Get = user_id => collection.findOne({ _id: user_id });
+
 module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
+
 
 module.exports.Add = async function Add(user) {
     if(!user.firstName){
         return Promise.reject( { code: 422, msg: "First Name is required" } )
     }
 
-    const has = await bcrypt.hash(user.pasword, +process.env.SALT_ROUNDS)
+    const hash = await bcrypt.hash(user.pasword, +process.env.SALT_ROUNDS)
     
     user.password = hash;
 
-    list.push(user);
+    const user2 = await collection.insertOne(user);
+    user._id = user2.insertedId;
 
-    return { ...user, password: undefined };
+    return { ...user2.ops[0], password: undefined };
 };
 
 
@@ -86,7 +94,7 @@ module.exports.Delete = function Delete(user_id) {
 
 module.exports.Login = async function Login(handle, password){
     console.log(handle, password);
-    const user = list.find(x=> x.handle == handle);
+    const user = collection.findOne({ handle });
 
     if (!user) {
         return Promise.reject( { code: 401, msg: "User not found" } );
@@ -104,8 +112,6 @@ module.exports.Login = async function Login(handle, password){
 
 }
 
-module.exports.Async = async () => {
-    console.log("Inner function: 1")
-    await Promise.resolve(1);  
-    console.log("Inner function: 2")
+module.exports.seed = () => {
+    list.forEach(x => module.exports.Add(x));
 }

@@ -52,4 +52,4 @@ Content-Type: application/json
 }
 
 ###
-http://localhost:3100/users/async
+http://localhost:3100/users/seed

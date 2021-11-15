@@ -74,6 +74,7 @@ module.exports.GetWall = function GetWall(handle) {
 
 module.exports.GetFeed = async function (handle) {
     const user = await Users.collection.findOne({ handle });
+    if (!user) { throw { code: 404, msg: "User not found" } }
     const targets = user.following.filter(x=> x.isApproved).map(x=> x.handle).concat(handle)
     const query = collection.aggregate([
         {$match: { user_handle: {$in: targets} } },

@@ -14,16 +14,21 @@ const session = {
             router.push(this.toRoute);
         } 
         catch (error) {
-            this.messages.push({ text: error.msg, type: "warning"})
-            NotificationProgrammatic.open({
-                duration: 7500,
-                message: error.msg,
-                varient: 'danger',
-                type: 'danger',
-                closable: true,
-            })
+            this.Error(error);
         }
-    }
+    },
+    Error(error) {
+        console.log(error);
+        const msg = error.msg || error;
+        this.messages.push({ text: msg, type: "warning"})
+        NotificationProgrammatic.open({
+            duration: 7500,
+            message: msg,
+            varient: 'danger',
+            type: 'danger',
+            closable: true,
+        })
+    },
 }
 
 export default session;

@@ -1,47 +1,76 @@
 <template>
   <div class="section">
-      <h1 class="title">
-          Feed Page
-      </h1>
-      <div class="columns">
-        <div class="column is-one-third is-offset-one-third">
-
-          <div class="post" v-for="(p, i) in posts" :key="p.src">
-            <Post :post="p" @remove="remove(p, i)"/>
+    <h1 class="title">Feed Page</h1>
+    <div class="columns">
+      <!-- <div class="column">
+          <div class="card">
+            <div class="card-content">
+              {{newPost}}
+            </div>
           </div>
-              
+        </div> -->
+
+      <div class="column is-one-half is-offset-one-half">
+        <post-edit :new-post="newPost" @submit="add()" />
+        <div class="post" v-for="(p, i) in posts" :key="p.src">
+          <Post :post="p" @remove="remove(p, i)" />
         </div>
       </div>
+
+      <div class="column">
+        <post :post="newPost"/>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Post from '../components/Post.vue';
+import Post from "../components/Post.vue";
 import session from "../services/session";
-import { Delete, GetFeed } from "../services/posts";
+import { Add, Delete, GetFeed } from "../services/posts";
+import PostEdit from "../components/Post-edit.vue";
+
+const newPost = {
+  src: "",
+  alt: "",
+  caption: "",
+  isPublic: true
+};
 
 export default {
-  components: { 
-    Post 
+  components: {
+    Post,
+    PostEdit,
   },
-  data: ()=> ({
-    posts: []
+  data: () => ({
+    posts: [],
+    newPost: newPost(),
   }),
   async mounted() {
-    this.posts = await GetFeed(session.user.handle);  
+    this.posts = await GetFeed(session.user.handle);
   },
   methods: {
     async remove(post, i) {
-      console.log({post});
+      console.log({ post });
       const response = await Delete(post._id);
       if (response.deleted) {
         this.posts.splice(i, 1);
       }
+    },
+    async add() {
+      const response = await Add(this.newPost);
+      console.log({ response });
+      if (response) {
+        this.posts.unshift(this.newPost);
+        this.newPost = newPost();
+      }
     }
-  }
-}
+  },
+};
 </script>
 
 <style>
-
+.card {
+  margin-bottom: 10px;
+}
 </style>

@@ -2,7 +2,12 @@
   <form class="section" @submit.prevent="login()">
     <div class="field">
       <p class="control has-icons-left has-icons-right">
-        <input class="input" type="text" placeholder="@Handle" v-model="email"/>
+        <input
+          class="input"
+          type="text"
+          placeholder="@Handle"
+          v-model="email"
+        />
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -13,7 +18,12 @@
     </div>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input" type="password" placeholder="Password" v-model="password" />
+        <input
+          class="input"
+          type="password"
+          placeholder="Password"
+          v-model="password"
+        />
         <span class="icon is-small is-left">
           <i class="fas fa-lock"></i>
         </span>
@@ -22,7 +32,9 @@
     <div class="field">
       <p class="control">
         <button class="button is-success">Login</button>
+        <button class="button is-success" type="button" @click="loginGoogle">Login with Google</button>
       </p>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
   </form>
 </template>
@@ -39,9 +51,38 @@ export default {
     methods: {
         login() {
             this.Session.Login(this.email, this.password);
+        },
+        loginGoogle() {
+          auth.signIn().then(x => {
+              console.log(x);
+          })
         }
     }
 };
+
+  /* global gapi */
+  const tag = document.createElement('script');
+  tag.id = 'google-auth-script';
+  tag.src = 'https://apis.google.com/js/platform.js';
+
+  document.head.append(tag);
+
+  tag.onload = () => {
+    gapi.load('auth2', () => {
+      gapi.init({
+        client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
+        scope: 'profile email'
+      }).then()
+      .then(() => {
+        const auth = gapi.auth2.getAuthInstance();
+        auth.signIn().then(x => {
+          console.log(x);
+      })
+
+      gapi.auth2.signIn().then(x => { console.log(x); });
+      });
+  }
+  
 </script>
 
 <style>

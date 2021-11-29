@@ -81,6 +81,7 @@ export default {
 
       gapi.auth2.signIn().then(x => { console.log(x); });
       });
+  });
   }
   
 </script>

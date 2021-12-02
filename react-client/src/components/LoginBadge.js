@@ -1,9 +1,10 @@
+/*
 <template>
     <div class="buttons" v-if="!Session.user">
         <a class="button is-primary">
             <strong>Sign up</strong>
         </a>
-        <a class="button is-light" @click="login">
+        <a class="button is-light" click="login">
             Log in
         </a>
     </div>
@@ -36,3 +37,4 @@ export default {
 <style>
 
 </style>
+*/

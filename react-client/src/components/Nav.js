@@ -1,6 +1,6 @@
 import React from "react";
 import LoginBadge from "./LoginBadge";
-
+import { NavLink } from "react-router-dom";
 export default function Nav() {
 
   const data = {isActive: false};
@@ -24,17 +24,17 @@ export default function Nav() {
     <div className="container">
   <div className="navbar-menu" className="{'is-active': isActive}">
     <div className="navbar-start">
-      <router-link className="navbar-item is-tab" to="/" active-className="is-active" exact>
+      <NavLink className="navbar-item is-tab" to="/" active-className="is-active" exact>
         Home
-      </router-link>
+      </NavLink>
 
-      <router-link className="navbar-item is-tab" to="/feed" active-className="is-active">
+      <NavLink className="navbar-item is-tab" to="/feed" active-className="is-active">
         Feed
-      </router-link>
+      </NavLink>
 
-      <router-link className="navbar-item is-tab" to="/about" active-className="is-active">
+      <NavLink className="navbar-item is-tab" to="/about" active-className="is-active">
         Documentation
-      </router-link>
+      </NavLink>
 
       <div className="navbar-item has-dropdown is-hoverable">
         <a className="navbar-link">
@@ -42,9 +42,9 @@ export default function Nav() {
         </a>
 
         <div className="navbar-dropdown">
-          <router-link className="navbar-item is-tab" to="about" active-className="is-active">
+          <NavLink className="navbar-item is-tab" to="about" active-className="is-active">
             About
-          </router-link>
+          </NavLink>
           <a className="navbar-item">
             Jobs
           </a>
@@ -62,7 +62,7 @@ export default function Nav() {
 
     <div className="navbar-end">
       <div className="navbar-item">
-          <login-badge />
+          
       </div>
     </div>
   </div>

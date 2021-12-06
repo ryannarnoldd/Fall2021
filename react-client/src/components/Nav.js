@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LoginBadge from "./LoginBadge";
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../assets/logo.svg";
 
 
 export default function Nav() {

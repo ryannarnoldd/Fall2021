@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import LoginBadge from "./LoginBadge";
 import { NavLink } from "react-router-dom";
-export default function Nav() {
+import logo from "../../assets/images/logo.png";
 
+
+export default function Nav() {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -62,7 +64,7 @@ export default function Nav() {
 
           <div className="navbar-end">
             <div className="navbar-item">
-
+              <LoginBadge />
             </div>
           </div>
         </div>
